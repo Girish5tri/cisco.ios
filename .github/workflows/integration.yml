@@ -1,3 +1,4 @@
+---
 name: Integration
 on:
   pull_request_target:
@@ -14,7 +15,7 @@ on:
 
 jobs:
   integration:
-    uses: ansible-network/github_actions/.github/workflows/integration.yml@main
+    uses: ansible/ansible-content-actions/.github/workflows/network_integration.yaml@main
     with:
       lab_title: cisco_ios
       network_os: cisco.ios.ios
