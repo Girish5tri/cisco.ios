@@ -11,6 +11,7 @@ on:
       - "plugins/**"
       - "tests/integration/**"
   workflow_dispatch:
+
 jobs:
   integration:
     uses: ansible/ansible-content-actions/.github/workflows/network_integration.yaml@main
