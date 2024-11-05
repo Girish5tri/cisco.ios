@@ -8,6 +8,9 @@ on:
       - opened
       - reopened
       - synchronize
+    paths:
+      - "plugins/**"
+      - "tests/integration/**"
   workflow_dispatch:
 
 jobs:
@@ -20,11 +23,13 @@ jobs:
       GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
   integration:
-    uses: ansible-content-actions/.github/workflows/integration.yml@main
+    uses: ansible/ansible-content-actions/.github/workflows/network_integration.yaml@main
     needs:
       - safe-to-test
     with:
+      lab_title: cisco_ios
       network_os: cisco.ios.ios
+      pytest_addopts: "--color=yes -n 2 --log-level WARNING -vvv"
       collection_pre_install: >-
         git+https://github.com/ansible-collections/ansible.utils.git
         git+https://github.com/ansible-collections/ansible.netcommon.git
