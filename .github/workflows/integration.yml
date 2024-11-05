@@ -1,3 +1,4 @@
+---
 name: Integration
 on:
   pull_request_target:
@@ -16,12 +17,14 @@ jobs:
   integration:
     uses: ansible/ansible-content-actions/.github/workflows/network_integration.yaml@main
     with:
-      lab_title: cisco_ios
+      lab_title: cisco_ios_${{ github.run_id }}_${{ github.run_number }}  # Using GitHub's built-in variables
       network_os: cisco.ios.ios
       pytest_addopts: "--color=yes -n 2 --log-level WARNING -vvv"
       collection_pre_install: >-
         git+https://github.com/ansible-collections/ansible.utils.git
         git+https://github.com/ansible-collections/ansible.netcommon.git
+      cml_lab: tests/integration/labs/single.yaml
+      integration_test_path: tests/integration/targets
     secrets:
       cml_ssh_password: ${{ secrets.CML_SSH_PASSWORD }}
       virl_host: ${{ secrets.VIRL_HOST }}
