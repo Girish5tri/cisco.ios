@@ -1,6 +1,6 @@
 ---
 lab:
-  description: ""
+  description: "CML Lab"
   notes: ""
   title: cisco.ios.ios
   version: 0.2.2
