@@ -17,12 +17,20 @@ jobs:
   integration:
     uses: ansible/ansible-content-actions/.github/workflows/network_integration.yaml@main
     with:
-      lab_title: ${{ github.event_name == 'pull_request_target' && format('cisco_ios_PR_{0}', github.event.pull_request.number) || format('cisco_ios_WF_{0}', github.run_number) }}
+      lab_title: cisco_ios_test  # Simple static name for now
       network_os: cisco.ios.ios
-      pytest_addopts: "--color=yes -n 2 --log-level WARNING -vvv"
+      # Modified pytest options to ensure proper test discovery and execution
+      pytest_addopts: >-
+        --integration-tests-path tests/integration/targets
+        --cml-lab tests/integration/labs/single.yaml
+        -n 2
+        --log-level DEBUG
+        -vvv
+      # Added required collections
       collection_pre_install: >-
         git+https://github.com/ansible-collections/ansible.utils.git
         git+https://github.com/ansible-collections/ansible.netcommon.git
+        git+https://github.com/ansible-collections/cisco.ios.git
     secrets:
       cml_ssh_password: ${{ secrets.CML_SSH_PASSWORD }}
       virl_host: ${{ secrets.VIRL_HOST }}
