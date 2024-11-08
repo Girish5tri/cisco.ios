@@ -1,3 +1,4 @@
+---
 name: Integration
 on:
   pull_request_target:
@@ -11,20 +12,9 @@ on:
       - "plugins/**"
       - "tests/integration/**"
   workflow_dispatch:
-
 jobs:
-  safe-to-test:
-    if: >-
-      github.event.label.name == 'safe to test' ||
-      github.event.action != 'labeled'
-    uses: ansible-network/github_actions/.github/workflows/safe-to-test.yml@main
-    secrets:
-      GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
   integration:
-    uses:  ansible/ansible-content-actions/.github/workflows/network_integration.yaml@main
-    needs:
-      - safe-to-test
+    uses: ansible/ansible-content-actions/.github/workflows/network_integration.yaml@main
     with:
       dry_run: false
       lab_title: cisco_ios
